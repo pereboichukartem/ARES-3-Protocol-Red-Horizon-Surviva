@@ -386,7 +386,7 @@ hr {
   color: #ff2a00;
   font-weight: bold;
   box-shadow: inset 0 0 5px rgba(255, 42, 0, 0.2);
-  animation: none;
+  animation: pulse-border 2s infinite;
 }
 
 .airlock-btn:hover {
