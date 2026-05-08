@@ -1,4 +1,4 @@
-// ================== Масив бази ==================
+// Масив бази
 const baseData = {
   crew: [
     { icon: "fa-user-astronaut", name: "Командир Джонс", desc: "Відповідає за безпеку екіпажу та зовнішні місії.", status: "Невідомо", color: "#ff3300" },
@@ -21,7 +21,7 @@ const baseData = {
   ],
   resources: []
 };
-// ================== Масив предметів ==================
+// Масив предметів
 const itemsData = {
   crater: [
     { name: "Метеорит", desc: "Рідкісний уламок з іридієм.", icon: "fa-meteor" },
@@ -34,7 +34,7 @@ const itemsData = {
     { name: "Запчастини", desc: "Корисно для ремонту.", icon: "fa-wrench" }
   ]
 };
-// ================== Масив місій ==================
+// Масив місій 
 const allMissionsPool = [
   { id: 1, title: "Ремонт насоса", reqItem: "Запчастини", desc: "Відновити тиск.", locName: "Подвір'я", screen: "surfaceScreen", top: 85, left: 45, icon: "fa-fan" },
   { id: 2, title: "Очищення панелей", reqItem: "Залізна руда", desc: "Прибрати пил.", locName: "Подвір'я", screen: "surfaceScreen", top: 40, left: 10, icon: "fa-solar-panel" },
@@ -45,7 +45,7 @@ const allMissionsPool = [
   { id: 7, title: "Спектральний аналіз", reqItem: "Кристал", desc: "Просканувати породу.", locName: "Кратер", screen: "craterScreen", top: 65, left: 30, icon: "fa-wave-square" },
   { id: 8, title: "Встановлення маяка", reqItem: "Запчастини", desc: "Поставити GPS.", locName: "Кратер", screen: "craterScreen", top: 40, left: 75, icon: "fa-map-pin" }
 ];
-// ================== Глобальні змінні ==================
+// Глобальні змінні
 let activeMissions = [];
 let completedCount = 0;
 let totalToWin = 5;
@@ -59,7 +59,7 @@ let finalEnergy = 0;
 let isFinalGameActive = false;
 let isSandstormActive = false;
 
-// ================== Завантаження гри ================== 
+// Завантаження гри
 window.onload = () => {
   clickSound = document.getElementById("clickSound");
   loadingSound = document.getElementById("loadingSound");
@@ -118,7 +118,7 @@ window.onload = () => {
   document.getElementById("mgCloseBtn")?.addEventListener("click", closeMinigame);
   document.getElementById("restartBtn")?.addEventListener("click", resetSaveGame);
 
-  // ================= ВІДНОВЛЕНО РАДАР =================
+  // Інтерактивний радар
   let fullMap = document.querySelector(".radarArea_full");
   if (fullMap) {
     fullMap.addEventListener("click", (e) => {
@@ -128,7 +128,7 @@ window.onload = () => {
       let xPercent = ((e.clientX - rect.left) / rect.width) * 100;
       let yPercent = ((e.clientY - rect.top) / rect.height) * 100;
 
-      // Рухаємо точку гравця на обох мапах (на головній і в розгорнутій)
+      
       document.querySelectorAll(".point").forEach(p => {
         p.style.left = xPercent + "%";
         p.style.top = yPercent + "%";
@@ -149,7 +149,7 @@ window.onload = () => {
       });
     });
   }
-  // ====================================================
+
 
   let overlay = document.getElementById("transitionOverlay");
   if (overlay) {
@@ -225,7 +225,7 @@ function triggerSandstorm() {
     airlock.style.animation = "";
   }
 
-  // Вмикаємо сирену
+  
   if (sirenSound) {
     sirenSound.currentTime = 0;
     sirenSound.play();
@@ -244,7 +244,7 @@ function triggerSandstorm() {
       airlock.style.animation = "none";
     }
 
-    // Вимикаємо сирену
+    
     if (sirenSound) {
       sirenSound.pause();
       sirenSound.currentTime = 0;
@@ -276,7 +276,7 @@ function updateProgress() {
     if (fBtn) fBtn.style.display = "block";
   }
 }
-// Відображення місій, екіпажу, журналів та інвентарю
+// Відображення Dashboard
 function renderData() {
   document.querySelectorAll(".mission-hotspot").forEach(el => el.remove());
 
@@ -371,7 +371,7 @@ function renderData() {
   if (mRes) mRes.innerHTML = miniRes;
   if (fRes) fRes.innerHTML = fullRes;
 }
-// ================== МІНІГРА ==================
+//  Мінігра
 window.startMinigame = function (id) {
   if (clickSound) { clickSound.currentTime = 0; clickSound.play(); }
 
@@ -447,7 +447,7 @@ function closeMinigame() {
   let modal = document.getElementById("minigameModal");
   if (modal) modal.classList.remove("active");
 }
-// ================== ФІНАЛЬНА МІНІГРА ==================
+// Мінігра перед фіналом
 function startFinalGame() {
   if (clickSound) { clickSound.currentTime = 0; clickSound.play(); }
   let modal = document.getElementById("finalMinigameModal");
@@ -511,7 +511,7 @@ function closeFinalGame() {
   let modal = document.getElementById("finalMinigameModal");
   if (modal) modal.classList.remove("active");
 }
-// Фінальна сцена після перемоги
+
 function triggerEndingFinale() {
   if (ambientSound) { ambientSound.pause(); }
   cinematicTransition('endingScreen', null, false);
@@ -577,7 +577,7 @@ function start() {
   }, 1200);
 }
 
-// Використання GSAP для плавного переходу між екранами та анімації елементів
+// Використання GSAP для гарних анімацій
 function cinematicTransition(screenIdToShow, bgImage = null, isGateway = false) {
   if (clickSound) clickSound.play();
   if (isGateway && gatewaySound) gatewaySound.play();
@@ -640,7 +640,7 @@ function goBack() {
     gsap.fromTo(mainEl, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" });
   }
 }
-// Функції для переходу між локаціями та взаємодії з ними
+// Логіка переходу між локаціями
 function goOutside() {
   if (isSandstormActive) {
     alert("[ПОМИЛКА]: Шлюзи заблоковані через піщану бурю!");
