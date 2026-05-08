@@ -1,0 +1,793 @@
+/* База (body) */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("images/Base.png") center/cover no-repeat;
+
+  /* Застосовуємо кастомний шрифт */
+  font-family: 'Share Tech Mono', monospace;
+
+  color: #ffca80;
+  transition: background-image 0.5s ease-in-out;
+  cursor: url('images/cursor.png') 0 0, crosshair;
+}
+
+/* Кастомний курсор для кнопок */
+button,
+.block,
+.hotspot,
+.power-btn,
+.back-btn,
+.action-btn {
+  cursor: url('images/cursor-hover.png') 10 0, pointer;
+}
+
+/* Кнопка завантаження */
+.power-btn {
+  height: min-content;
+  font-size: 24px;
+  padding: 20px 40px;
+  background: rgba(255, 94, 0, 0.1);
+  border: 2px solid #ff5e00;
+  color: #ff5e00;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #ff5e00;
+  box-shadow: 0 0 15px rgba(255, 94, 0, 0.4), inset 0 0 10px rgba(255, 94, 0, 0.2);
+  text-transform: uppercase;
+  transition: all 0.3s;
+  animation: pulse-border 2s infinite;
+}
+
+.power-btn:hover {
+  background: #ff5e00;
+  color: #1a0500;
+  box-shadow: 0 0 30px #ff5e00, inset 0 0 20px rgba(0, 0, 0, 0.5);
+  text-shadow: none;
+}
+
+/* Анімація пульсації для кнопки завантаження */
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 15px rgba(255, 94, 0, 0.4), inset 0 0 10px rgba(255, 94, 0, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(255, 94, 0, 0.8), inset 0 0 20px rgba(255, 94, 0, 0.5);
+  }
+
+  100% {
+    box-shadow: 0 0 15px rgba(255, 94, 0, 0.4), inset 0 0 10px rgba(255, 94, 0, 0.2);
+  }
+}
+
+/* Звичайні блокові кнопки */
+button {
+  background: rgba(255, 94, 0, 0.05);
+  border: 1px solid #ff5e00;
+  color: #ffca80;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-family: 'Share Tech Mono', monospace;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 5px rgba(255, 94, 0, 0.2);
+  transition: all 0.3s;
+}
+
+.back-btn {
+  background: rgba(255, 94, 0, 0.05);
+  border: 1px solid #ff5e00;
+  color: #ffca80;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-family: 'Share Tech Mono', monospace;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 5px rgba(255, 94, 0, 0.2);
+  transition: all 0.3s;
+}
+
+button:hover {
+  background: #ff5e00;
+  color: #1a0500;
+  box-shadow: 0 0 15px #ff5e00;
+  text-shadow: none;
+}
+
+.back-btn:hover {
+  background: #ff5e00;
+  color: #1a0500;
+  box-shadow: 0 0 15px #ff5e00;
+  text-shadow: none;
+}
+
+/* Контейнер dashboard */
+#dashboard {
+  width: 1000px;
+  height: 650px;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background: linear-gradient(rgba(40, 15, 0, 0.95), rgba(15, 5, 0, 0.95));
+  border: 1px solid rgba(255, 94, 0, 0.6);
+  box-shadow: 0 0 10px #ff5e00, 0 0 30px rgba(255, 94, 0, 0.4), inset 0 0 20px rgba(255, 94, 0, 0.2);
+  position: relative;
+}
+
+#dashboard::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(255, 94, 0, 0.05) 3px);
+  pointer-events: none;
+}
+
+/* Стилі лівої та правої панелі, а також нижньої секції */
+.left {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.right {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bottom {
+  display: flex;
+  gap: 12px;
+}
+
+/* Екрани блоків */
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: flex;
+  justify-content: center;
+  height: 80vh;
+}
+
+.full {
+  width: 950px;
+  height: 600px;
+  padding: 20px;
+  border: 1px solid #ff5e00;
+  background: rgba(30, 10, 0, 0.95);
+  box-shadow: 0 0 10px #ff5e00, 0 0 30px rgba(255, 94, 0, 0.4);
+}
+
+.text {
+  height: 400px;
+  padding: 15px;
+  border: 1px solid rgba(255, 94, 0, 0.5);
+  background: rgba(255, 94, 0, 0.05);
+  box-shadow: inset 0 0 5px rgba(255, 94, 0, 0.2);
+  overflow-y: auto;
+}
+
+/* Додатковий ефект сітки на фоні дашборду */
+
+
+/* Блоки */
+.block {
+  border: 1px solid rgba(255, 94, 0, 0.6);
+  padding: 12px;
+  background: rgba(50, 15, 0, 0.4);
+  box-shadow: 0 0 10px rgba(255, 94, 0, 0.2);
+}
+
+.block:hover {
+  box-shadow: 0 0 20px rgba(255, 94, 0, 0.5);
+}
+
+.block h3 {
+  margin: 0 0 10px;
+  font-size: 13px;
+  opacity: 0.8;
+  border-bottom: 1px solid rgba(255, 94, 0, 0.4);
+  padding-bottom: 5px;
+}
+
+.block p {
+  margin: 5px 0;
+  font-size: 13px;
+}
+
+h3,
+p,
+strong {
+  text-shadow: 0 0 3px rgba(255, 202, 128, 0.6);
+}
+
+/* Інтерактивний радар */
+.radarArea,
+.radarArea_full {
+  background: url("images/map.png") center/cover no-repeat;
+  border: 1px solid rgba(255, 94, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.radarArea {
+  height: 300px;
+}
+
+.radarArea_full {
+  height: 75%;
+}
+
+/* Сітка екіпірування та ресурсів */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+/* Стилі для елементів екіпірування та ресурсів */
+.item {
+  height: 45px;
+  border: 1px solid rgba(255, 94, 0, 0.5);
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 94, 0, 0.05);
+  box-shadow: inset 0 0 5px rgba(255, 94, 0, 0.2);
+}
+
+.item_full {
+  height: auto;
+  padding: 5px;
+  border: 1px solid rgba(255, 94, 0, 0.5);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 94, 0, 0.05);
+  box-shadow: inset 0 0 5px rgba(255, 94, 0, 0.2);
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-color: rgba(255, 94, 0, 0.5);
+  width: 90%;
+}
+
+/* екіпаж */
+.crew-card {
+  height: 45px;
+  border: 1px solid rgba(255, 94, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: rgba(255, 94, 0, 0.05);
+  box-shadow: inset 0 0 5px rgba(255, 94, 0, 0.2);
+}
+
+.crew-card-full {
+  height: 100px;
+  padding: 15px;
+  border: 1px solid rgba(255, 94, 0, 0.5);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 20px;
+  align-items: center;
+  background: rgba(255, 94, 0, 0.05);
+  box-shadow: inset 0 0 5px rgba(255, 94, 0, 0.2);
+}
+
+/* Точки на радарі */
+.point {
+  width: 12px;
+  height: 12px;
+  background: #00e5ff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00e5ff;
+}
+
+.point::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #00e5ff;
+  border-radius: 50%;
+  top: -4px;
+  left: -4px;
+  animation: pulse 1.5s infinite;
+}
+
+/* Анімація пульсації для гравця на радарі */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.point1,
+.point2 {
+  width: 10px;
+  height: 10px;
+  background: #ff5e00;
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff5e00;
+}
+
+.point1 {
+  top: 70%;
+  left: 62%;
+}
+
+.point2 {
+  top: 60%;
+  left: 45%;
+}
+
+/* Підписи для точок на радарі */
+.point1::after {
+  content: "Піщана буря";
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  color: #ff5e00;
+  background-color: rgb(0 0 0 / 70%);
+  font-size: 12px;
+  padding: 2px 4px;
+}
+
+.point2::after {
+  content: "База";
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  color: #ff5e00;
+  background-color: rgb(0 0 0 / 70%);
+  font-size: 12px;
+  padding: 2px 4px;
+}
+
+/* Іконки для екіпірування та ресурсів */
+.fa-solid {
+  font-size: 1.8em;
+}
+
+.item_full .fa-solid {
+  margin-bottom: 10px;
+}
+
+/* Вулиця */
+.airlock-btn {
+  margin-top: auto;
+  border: 2px solid #ff2a00;
+  color: #ff2a00;
+  font-weight: bold;
+  box-shadow: inset 0 0 5px rgba(255, 42, 0, 0.2);
+  animation: none;
+}
+
+.airlock-btn:hover {
+  background: #ff2a00;
+  color: #000;
+  box-shadow: 0 0 20px #ff2a00;
+}
+
+#transitionOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease-in-out;
+}
+
+#transitionOverlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#surfaceScreen,
+#base2Screen,
+#craterScreen,
+#dunesScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.return-btn {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  font-size: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  border-color: #00e5ff;
+  color: #00e5ff;
+  z-index: 1010;
+}
+
+.return-btn:hover {
+  background: #00e5ff;
+  color: #000;
+}
+
+/* Інтерактивні об'єкти */
+.hotspot {
+  position: absolute;
+  color: #00e5ff;
+  text-align: center;
+  transition: transform 0.3s;
+  z-index: 1010;
+}
+
+.hotspot:hover {
+  transform: scale(1.15);
+  color: #fff;
+}
+
+.hs-marker {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #00e5ff;
+  border-radius: 50%;
+  margin: 0 auto;
+  box-shadow: 0 0 15px #00e5ff;
+  animation: pulse-hs 2s infinite;
+}
+
+/* Анімація пульсації для інтерактивних об'єктів */
+@keyframes pulse-hs {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 25px rgba(0, 229, 255, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 229, 255, 0);
+  }
+}
+
+.hotspot p {
+  margin-top: 10px;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #00e5ff;
+  text-shadow: none;
+}
+
+/* Шкала прогресу */
+.progress-box {
+  border: 1px solid rgba(255, 94, 0, 0.6);
+  padding: 12px;
+  background: rgba(50, 15, 0, 0.4);
+  margin-top: auto;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px rgba(255, 94, 0, 0.2);
+}
+
+.progress-box h3 {
+  margin: 0 0 10px;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: none;
+  opacity: 1;
+}
+
+.prog-bar-bg {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 94, 0, 0.1);
+  border: 1px solid #ff5e00;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.prog-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: #00e5ff;
+  box-shadow: 0 0 10px #00e5ff;
+  transition: width 0.5s ease-out;
+}
+
+/* Кнопки дій в місіях */
+.action-btn {
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid #00e5ff;
+  color: #00e5ff;
+  padding: 8px 15px;
+  margin: 0;
+}
+
+.action-btn:hover {
+  background: #00e5ff;
+  color: #000;
+  box-shadow: 0 0 15px #00e5ff;
+}
+
+/* Стилі для контейнера завдання у журналі */
+.mission-box {
+  border: 1px solid rgba(255, 94, 0, 0.4);
+  padding: 10px;
+  margin-bottom: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Спеціальний жовтий маркер для завдань */
+.mission-marker {
+  border-color: #ffcc00;
+  box-shadow: 0 0 15px #ffcc00;
+  animation: pulse-mission 2s infinite;
+}
+
+@keyframes pulse-mission {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 25px rgba(255, 204, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 204, 0, 0);
+  }
+}
+
+.mission-text {
+  border-color: #ffcc00 !important;
+  color: #ffcc00 !important;
+}
+
+/* Маркер Бази-2 */
+.base-marker {
+  border-color: #00ff00;
+  box-shadow: 0 0 15px #00ff00;
+  animation: pulse-base 2s infinite;
+}
+
+@keyframes pulse-base {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 25px rgba(0, 255, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 0, 0);
+  }
+}
+
+/* Вікно міні-гри */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-content {
+  width: 400px;
+  padding: 20px;
+  background: #110500;
+  border: 2px solid #00e5ff;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+  text-align: center;
+}
+
+/* Кастомні стилі для скроллбару в текстових блоках */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 94, 0, 0.05);
+  border-left: 1px solid rgba(255, 94, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 94, 0, 0.6);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00e5ff;
+}
+
+/* Стилі для міні-гри */
+.mg-track {
+  width: 100%;
+  height: 30px;
+  background: #333;
+  border: 1px solid #888;
+  position: relative;
+  margin: 20px 0;
+}
+
+.mg-slider {
+  position: absolute;
+  top: -5px;
+  left: 0%;
+  width: 4px;
+  height: 40px;
+  background: #fff;
+  box-shadow: 0 0 10px #fff;
+}
+
+.mg-zone {
+  position: absolute;
+  height: 100%;
+}
+
+.mg-red {
+  width: 100%;
+  left: 0;
+  background: rgba(255, 0, 0, 0.4);
+}
+
+.mg-yellow {
+  width: 40%;
+  left: 30%;
+  background: rgba(255, 204, 0, 0.6);
+  border-left: 1px solid #ffcc00;
+  border-right: 1px solid #ffcc00;
+}
+
+.mg-green {
+  width: 10%;
+  left: 45%;
+  background: rgba(0, 255, 0, 0.8);
+  border-left: 2px solid #00ff00;
+  border-right: 2px solid #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+/* Кнопка фіналу */
+.final-btn {
+  background: rgba(255, 0, 0, 0.1);
+  border: 2px solid #ff0000;
+  color: #ff0000;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: auto;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+  animation: pulse-red 1.5s infinite;
+  cursor: url('images/cursor-hover.png') 10 0, pointer;
+}
+
+.final-btn:hover {
+  background: #ff0000;
+  color: #000;
+  box-shadow: 0 0 30px #ff0000;
+}
+
+@keyframes pulse-red {
+  0% {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+  }
+
+  100% {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+  }
+}
+
+/* АДАПТИВНІСТЬ ТА МОБІЛЬНА ВЕРСІЯ */
+@media (max-width: 1050px) {
+  #dashboard {
+    width: 95vw;
+    height: 90vh;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  .left,
+  .right {
+    width: 100%;
+  }
+
+  .bottom {
+    flex-direction: column;
+  }
+
+  .full {
+    width: 95vw;
+    height: 90vh;
+    padding: 10px;
+  }
+
+  .text {
+    height: auto;
+    min-height: 300px;
+    max-height: 60vh;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sensors-flex {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .crew-card-full {
+    flex-direction: column;
+    text-align: center;
+    height: auto;
+  }
+
+  .crew-card-full p {
+    text-align: left;
+  }
+
+  .crew-card-full span {
+    float: none !important;
+    display: block;
+    margin-top: 5px;
+  }
+}

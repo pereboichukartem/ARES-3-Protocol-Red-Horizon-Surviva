@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="uk">
+<!-- Підключення необхідних ресурсів -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ARES-3 Protocol: Red Horizon Survival</title>
+  <link rel="icon" type="image/png" href="images/mars-icon.png">
+
+  <!-- Підключення кастомних шрифтів -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <!-- Підключення CSS та Font Awesome -->
+  <link rel="stylesheet" href="Mars_base_style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+  <!-- Екран запуску -->
+  <div id="transitionOverlay" class="active"></div>
+
+  <div id="startScreen" class="screen active" style="flex-direction: column; align-items: center; gap: 20px;">
+    <button id="powerBtn" class="power-btn">[ УВІМКНУТИ ЖИВЛЕННЯ ]</button>
+    <button id="resetSaveBtn" class="back-btn" style="display: none; border-color: #ff3300; color: #ff3300;">[ СКИНУТИ
+      ПРОГРЕС ]</button>
+  </div>
+
+  <div id="loadingScreen" class="screen">
+    <p id="loadingText">Система підключається...</p>
+  </div>
+
+  <!-- Dashboard -->
+
+  <div id="mainScreen" class="screen">
+    <div id="dashboard">
+
+      <!-- Ліва панель з прогресом, журналами та кнопками дій -->
+      <div class="left">
+        <div class="block progress-block">
+          <div
+            style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; font-weight: bold;">
+            <span>ГЛОБАЛЬНИЙ ПРОГРЕС</span><span id="progText" style="color:#00e5ff;">0%</span>
+          </div>
+          <div class="prog-bar-bg">
+            <div class="prog-bar-fill" id="mainProgress"></div>
+          </div>
+        </div>
+
+        <div class="block" data-tab="missions">
+          <h3>ЖУРНАЛ ЗАВДАНЬ</h3>
+          <div id="mini-missions"></div>
+        </div>
+
+        <div class="block" data-tab="crew">
+          <h3>ЕКІПАЖ</h3>
+          <div id="mini-crew"></div>
+        </div>
+
+        <div class="block" data-tab="logs">
+          <h3>ЖУРНАЛ (LOG)</h3>
+          <div id="mini-logs"></div>
+        </div>
+
+        <button id="airlockBtn" class="airlock-btn">[ ШЛЮЗ: ВИХІД НА ПОВЕРХНЮ ]</button>
+        <button id="finalLaunchBtn" class="final-btn" style="display: none;">[ ФІНАЛЬНИЙ ЗАПУСК ]</button>
+      </div>
+
+      <!-- Права панель з радаром, ресурсами та датчиками -->
+      <div class="right">
+        <div class="block" data-tab="radar">
+          <h3>РАДАР СЕКТОРУ</h3>
+          <div class="radarArea">
+            <div class="point" id="player"></div>
+          </div>
+        </div>
+
+        <div class="bottom">
+          <div class="block" data-tab="equipment" style="flex: 1;">
+            <h3>ЕКІПІРУВАННЯ</h3>
+            <div class="grid" id="mini-equipment"></div>
+          </div>
+          <div class="block" data-tab="resources" style="flex: 1;">
+            <h3>РЕСУРСИ</h3>
+            <div class="grid" id="mini-resources"></div>
+          </div>
+        </div>
+
+        <div class="block"
+          style="margin-top: auto; border-color: #00e5ff; box-shadow: inset 0 0 15px rgba(0,229,255,0.1);">
+          <h3 style="color: #00e5ff; border-bottom-color: #00e5ff;">ДАТЧИКИ СЕРЕДОВИЩА</h3>
+          <div class="sensors-flex"
+            style="display: flex; justify-content: space-around; text-align: center; margin-top: 15px;">
+            <div><i class="fa-solid fa-temperature-half fa-sm" style="color: #ff5e00;"></i><br><span id="sensorTemp"
+                style="font-size:14px; display:block; margin-top:10px; font-weight:bold;">-62°C</span></div>
+            <div><i class="fa-solid fa-radiation fa-sm" style="color: #00ff00;"></i><br><span id="sensorRad"
+                style="font-size:14px; display:block; margin-top:10px; font-weight:bold;">0.12 mSv</span></div>
+            <div><i class="fa-solid fa-wind fa-sm" style="color: #ffca80;"></i><br><span id="sensorWind"
+                style="font-size:14px; display:block; margin-top:10px; font-weight:bold;">14 м/с</span></div>
+            <div><i class="fa-solid fa-lungs fa-sm" style="color: #00e5ff;"></i><br><span id="sensorO2"
+                style="font-size:14px; display:block; margin-top:10px; font-weight:bold;">98% O2</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Екрани поверхні та локацій -->
+
+  <div id="surfaceScreen" class="screen">
+    <button id="returnBtn" class="return-btn">[ ПОВЕРНУТИСЯ НА БАЗУ-1 ]</button>
+    <div id="pathBase2" class="hotspot" style="top: 40%; left: 50%;">
+      <div class="hs-marker base-marker"></div>
+      <p>Шлюз Бази-2</p>
+    </div>
+    <div id="pathCrater" class="hotspot" style="top: 75%; left: 20%;">
+      <div class="hs-marker"></div>
+      <p>Йти до кратера</p>
+    </div>
+    <div id="pathDunes" class="hotspot" style="top: 60%; left: 80%;">
+      <div class="hs-marker"></div>
+      <p>Йти в дюни</p>
+    </div>
+  </div>
+
+  <div id="craterScreen" class="screen">
+    <button id="returnFromCraterBtn" class="return-btn">⬅ Повернутися на подвір'я</button>
+
+    <!-- Кнопки лута в кратері -->
+
+    <div id="craterLoot1" class="hotspot" style="top: 50%; left: 50%;">
+      <div class="hs-marker"></div>
+      <p>Метеорит</p>
+    </div>
+    <div id="craterLoot2" class="hotspot" style="top: 65%; left: 25%;">
+      <div class="hs-marker"></div>
+      <p>Зразок ґрунту</p>
+    </div>
+    <div id="craterLoot3" class="hotspot" style="top: 40%; left: 75%;">
+      <div class="hs-marker"></div>
+      <p>Кристал</p>
+    </div>
+  </div>
+
+  <div id="dunesScreen" class="screen">
+    <button id="returnFromDunesBtn" class="return-btn">⬅ Повернутися на подвір'я</button>
+    <!-- Кнопки лута в дюнах -->
+    <div id="dunesLoot1" class="hotspot" style="top: 65%; left: 35%;">
+      <div class="hs-marker"></div>
+      <p>Оглянути уламки</p>
+    </div>
+    <div id="dunesLoot2" class="hotspot" style="top: 50%; left: 65%;">
+      <div class="hs-marker"></div>
+      <p>Сонячна панель</p>
+    </div>
+    <div id="dunesLoot3" class="hotspot" style="top: 80%; left: 20%;">
+      <div class="hs-marker"></div>
+      <p>Запчастини</p>
+    </div>
+  </div>
+
+  <div id="base2Screen" class="screen">
+    <button id="leaveBase2Btn" class="return-btn">⬅ Вийти на поверхню</button>
+  </div>
+
+  <!-- Екрани всіх блоків -->
+
+   <!-- Місії --> 
+  <div id="missionsScreen" class="screen">
+    <div class="full"><button class="back-btn">⬅ Назад</button>
+      <h2>АКТИВНІ ЗАВДАННЯ</h2>
+      <div class="text" id="full-missions"></div>
+    </div>
+  </div>
+  <!-- Екіпаж -->
+  <div id="crewScreen" class="screen">
+    <div class="full"><button class="back-btn">⬅ Назад</button>
+      <h2>КОМАНДА ARES-3</h2>
+      <div id="full-crew"></div>
+    </div>
+  </div>
+  <!-- Журнал -->
+  <div id="logsScreen" class="screen">
+    <div class="full"><button class="back-btn">⬅ Назад</button>
+      <h2>ЖУРНАЛ СИСТЕМИ</h2>
+      <div class="text">
+        <p id="full-logs"></p>
+      </div>
+    </div>
+  </div>
+  <!-- Радар -->
+  <div id="radarScreen" class="screen">
+    <div class="full"><button class="back-btn">⬅ Назад</button>
+      <h2>РАДАР СЕКТОРУ</h2>
+      <div class="radarArea_full" id="radarArea">
+        <div class="point" id="player"></div>
+        <div class="point1"></div>
+        <div class="point2"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Екіпірування -->
+  <div id="equipmentScreen" class="screen">
+    <div class="full"><button class="back-btn">⬅ Назад</button>
+      <h2>ЕКІПІРУВАННЯ</h2>
+      <div class="text">
+        <div class="grid" id="full-equipment"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Ресурси -->
+  <div id="resourcesScreen" class="screen">
+    <div class="full"><button class="back-btn">⬅ Назад</button>
+      <h2>ЗІБРАНІ РЕСУРСИ</h2>
+      <div class="text">
+        <div class="grid" id="full-resources"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Мінігра для калібрування системи та фінальна мінігра для запуску реактора -->
+
+  <div id="minigameModal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 style="margin-top: 0;" id="mgTitle">КАЛІБРУВАННЯ СИСТЕМИ</h3>
+      <p style="font-size: 13px; color: #aaa;">Зелена: 100% | Жовта: 50% | Червона: 10%</p>
+      <div class="mg-track">
+        <div class="mg-zone mg-red"></div>
+        <div class="mg-zone mg-yellow"></div>
+        <div class="mg-zone mg-green"></div>
+        <div class="mg-slider" id="mgSlider"></div>
+      </div>
+      <button id="mgBtn" class="action-btn">[ ФІКСАЦІЯ ]</button>
+      <button id="mgCloseBtn" class="back-btn" style="margin-top: 15px;">Скасувати</button>
+    </div>
+  </div>
+
+  <div id="finalMinigameModal" class="modal-overlay">
+    <div class="modal-content" style="border-color: #ff0000; box-shadow: 0 0 20px rgba(255,0,0,0.5);">
+      <h3 style="color: #ff0000; margin-top: 0; font-size: 24px;">ЗАПУСК РЕАКТОРА</h3>
+      <p style="font-weight: bold;">Увага! Критичне навантаження.</p>
+      <p style="font-size: 14px; margin-bottom: 20px;">Натискайте кнопку максимально швидко, щоб заповнити шкалу енергії
+        до 100% за 5 секунд!</p>
+      <div class="prog-bar-bg"
+        style="height: 30px; margin: 20px 0; border-color: #ff0000; background: rgba(255,0,0,0.1);">
+        <div class="prog-bar-fill" id="finalEnergyBar"
+          style="background: #ff0000; box-shadow: 0 0 10px #ff0000; width: 0%; transition: width 0.1s;"></div>
+      </div>
+      <button id="pumpEnergyBtn" class="action-btn"
+        style="border-color:#ff0000; color:#ff0000; font-size: 22px; padding: 15px 30px; width: 100%; animation: pulse-red 1s infinite;">[
+        ПОДАТИ ЕНЕРГІЮ ]</button>
+      <p id="finalTimerText" style="font-size: 20px; margin-top: 15px; color: #ffca80; font-weight: bold;">Час: 5.0с</p>
+      <button id="cancelFinalBtn" class="back-btn" style="margin-top: 10px; width: 100%;">Відміна</button>
+    </div>
+  </div>
+
+  <div id="endingScreen" class="screen">
+    <div class="full"
+      style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <i class="fa-solid fa-rocket fa-4x"
+        style="color: #00ff00; text-shadow: 0 0 20px #00ff00; margin-bottom: 20px;"></i>
+      <h1 style="color: #00ff00;">ЗАПУСК УСПІШНИЙ!</h1>
+      <p style="font-size: 18px;">Всі критичні системи працюють ідеально. Ракета ARES-3 вийшла на орбіту Марса.</p>
+      <button id="restartBtn" style="margin-top: 30px;" class="action-btn">ПОЧАТИ НОВУ ГРУ</button>
+    </div>
+  </div>
+
+  <!-- Підключення звуків-->
+
+  <audio id="clickSound" src="Sounds/click.mp3"></audio>
+  <audio id="loadingSound" src="Sounds/interface.mp3"></audio>
+  <audio id="ambientSound" src="Sounds/radio.mp3" loop></audio>
+  <audio id="gatewaySound" src="Sounds/gateway.mp3"></audio>
+  <audio id="sirenSound" src="Sounds/siren.mp3" loop></audio>
+
+  <!-- Підключення необхідних ресурсів JS та GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <script src="Mars_base_JS.js"></script>
+</body>
+
+</html>
