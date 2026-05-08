@@ -220,9 +220,9 @@ function triggerSandstorm() {
   let airlock = document.getElementById("airlockBtn");
   if (airlock) {
     airlock.innerText = "[ ШЛЮЗ ЗАБЛОКОВАНО: БУРЯ ]";
-    airlock.style.borderColor = "red";
-    airlock.style.color = "red";
-    airlock.style.animation = "pulse-red 1s infinite";
+    airlock.style.borderColor = "";
+    airlock.style.color = "";
+    airlock.style.animation = "";
   }
 
   // Вмикаємо сирену
