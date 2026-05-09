@@ -6,10 +6,7 @@ body {
   justify-content: center;
   align-items: center;
   background: url("images/Base.png") center/cover no-repeat;
-
-  /* Застосовуємо кастомний шрифт */
-  font-family: 'Share Tech Mono', monospace;
-
+  font-family: 'Share Tech Mono', monospace;  /* кастомний шрифт */
   color: #ffca80;
   transition: background-image 0.5s ease-in-out;
   cursor: url('images/cursor.png') 0 0, crosshair;
