@@ -659,7 +659,7 @@ function goToLocation(loc) {
 }
 
 function RandomNumber(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-// Логіка збору ресурсів на локаціях, додавання їх до інвентарю та оновлення даних гри
+// Логіка збору ресурсів на локаціях
 function collectResource(resourceObj, element) {
   if (clickSound) { clickSound.play(); }
 
