@@ -71,7 +71,7 @@ window.onload = () => {
   if (loadingSound) loadingSound.volume = 0.5;
   if (ambientSound) ambientSound.volume = 0.4;
   if (gatewaySound) gatewaySound.volume = 0.5;
-  if (sirenSound) sirenSound.volume = 0.4;
+  if (sirenSound) sirenSound.volume = 0.2;
 
   if (!loadGame()) {
     generateRandomMissions();
