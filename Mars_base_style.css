@@ -152,7 +152,7 @@ button:hover {
 .screen.active {
   display: flex;
   justify-content: center;
-  height: 90vh;
+  height: 80vh;
 }
 
 .full {
